@@ -13,14 +13,8 @@ export fn _start() noreturn {
     GPIOA.setMode(PA5, PIN_MODE.OUTPUT);
     GPIOB.setMode(PB4, PIN_MODE.INPUT);
 
-    // Blink loop
-    var x = true;
-
     while (true) {
-        for (1..100) |_| {
-            x = GPIOB.digitalRead(PB4);
-        }
-        if (x) {
+        if (GPIOB.digitalRead(PB4)) {
             GPIOA.toggle(PA5);
             timer.delayMicros(1_000_000);
         }

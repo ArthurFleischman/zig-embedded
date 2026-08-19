@@ -1,8 +1,9 @@
+const build_options = @import("config");
 const RCC_BASE = 0x4002_3800;
 const TIM2_BASE = 0x4000_0000;
 const SYST_CSR: *volatile u32 = @ptrFromInt(0xE000E010); // Control and Status
 const SYST_RVR: *volatile u32 = @ptrFromInt(0xE000E014); // Reload Value
-const CPU_FREQ_HZ = 16_000_000;
+const CPU_FREQ_HZ = build_options.cpu_freq;
 
 const RCC = struct {
     CR: u32,

@@ -1,2 +1,0 @@
-0
-1980 2119097 1757736337398003060 46f6cc5ceb5857379d8bb483bfdd9122 0 /Users/arthurfleischman/Projects/Personal/zig-stm32-blink/startup_f401.s

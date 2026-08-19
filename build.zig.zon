@@ -74,8 +74,9 @@
         "build.zig",
         "build.zig.zon",
         "src",
-        // For example...
-        //"LICENSE",
-        //"README.md",
+        "startup_f401.s",
+        "linker.ld",
+        "LICENSE",
+        "README.md",
     },
 }

@@ -1,6 +1,19 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
+
+    //--------------------------------------------//
+    // Fetch cpu freq                             //
+    // -------------------------------------------//
+    const cpu_freq = b.option(
+        u32,
+        "cpu-freq",
+        "CPU frequency in Hz",
+    ) orelse 16_000_000;
+    const options = b.addOptions();
+    options.addOption(u32, "cpu_freq", cpu_freq);
+    std.log.info("Compiled with: {} Hz\n", .{cpu_freq});
+
     // -------------------------------------------//
     // Define target                              //
     // -------------------------------------------//
@@ -43,7 +56,9 @@ pub fn build(b: *std.Build) void {
     exe.link_gc_sections = true;
     exe.link_data_sections = true;
     exe.link_function_sections = true;
+
     exe.setLinkerScript(b.path("linker.ld")); // You must provide this
+    exe.root_module.addOptions("config", options);
 
     b.installArtifact(exe);
 }

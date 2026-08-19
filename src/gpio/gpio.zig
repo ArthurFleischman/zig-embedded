@@ -32,7 +32,13 @@ const GPIO = struct {
     }
     pub fn digitalRead(self: GPIO, pin: pins.PINS) bool {
         const shift: u5 = getShift(pin);
-        return ((self.idr.* >> shift) & 1) != 0;
+        var value = false;
+
+        //debaounce digital reading
+        for (1..100) |_| {
+            value = ((self.idr.* >> shift) & 1) != 0;
+        }
+        return value;
     }
     pub fn setPupdr(
         self: GPIO,
