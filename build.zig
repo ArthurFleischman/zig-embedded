@@ -1,6 +1,9 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
+    // -------------------------------------------//
+    // Define target                              //
+    // -------------------------------------------//
     const target = b.resolveTargetQuery(.{
         .cpu_arch = .thumb,
         .cpu_model = .{ .explicit = &std.Target.arm.cpu.cortex_m4 },
@@ -12,20 +15,35 @@ pub fn build(b: *std.Build) void {
         .abi = .eabihf,
         .ofmt = .elf,
     });
+
+    // -------------------------------------------//
+    // Define optimization                        //
+    // -------------------------------------------//
     const optimize = b.standardOptimizeOption(.{ .preferred_optimize_mode = .Debug });
-    const exe = b.addExecutable(.{
-        .name = "stm32f401re.elf",
+
+    // -------------------------------------------//
+    // Define module                              //
+    // -------------------------------------------//
+    const module = b.createModule(.{
         .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = optimize,
         .link_libc = false,
+    });
+    module.addAssemblyFile(b.path("startup_f401.s"));
+
+    // -------------------------------------------//
+    // Define executable                          //
+    // -------------------------------------------//
+    const exe = b.addExecutable(.{
+        .name = "stm32f401re.elf",
+        .root_module = module,
         .linkage = .static,
     });
     exe.link_gc_sections = true;
     exe.link_data_sections = true;
     exe.link_function_sections = true;
-
     exe.setLinkerScript(b.path("linker.ld")); // You must provide this
-    exe.addAssemblyFile(b.path("startup_f401.s"));
+
     b.installArtifact(exe);
 }
