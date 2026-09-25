@@ -1,5 +1,5 @@
 pub const PINS = enum(u5) {
-    PA0 = 0,
+    PA0 = 0x00,
     PA1,
     PA2,
     PA3,
@@ -14,8 +14,8 @@ pub const PINS = enum(u5) {
     PA12,
     PA13,
     PA14,
-    PA15,
-    PB0,
+    PA15, // 15
+    PB0, // 16
     PB1,
     PB2,
     PB3,

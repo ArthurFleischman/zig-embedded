@@ -1,10 +1,12 @@
 const timer = @import("timer/timer.zig");
+
 const PIN_MODE = @import("gpio/pins.zig").PIN_MODE;
 const PUPDR_MODE = @import("gpio/pins.zig").PUPDR_MODE;
 const GPIOA = @import("gpio/gpio.zig").GPIOA;
 const GPIOB = @import("gpio/gpio.zig").GPIOB;
 const PB4 = @import("gpio/pins.zig").PINS.PB4;
 const PA5 = @import("gpio/pins.zig").PINS.PA5;
+
 export fn _start() noreturn {
     timer.systick_init();
     timer.setupTimer2();

@@ -1,16 +1,24 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
-
+    // const modes = std.builtin.OptimizeMode;
+    const options = b.addOptions();
+    //--------------------------------------------//
+    // Fetch compilation mode                     //
+    // -------------------------------------------//
+    // const compilation_mode = b.option(*const [2:0]u8, "mode", "Compilation mode:\n [d]Debug\n[rf]Release fast\n[rs]Release safe\n[rm]Release small\n") orelse "d ";
+    // options.addOption(*const [:0]u8, "mode", compilation_mode);
+    // std.log.info("Compiled using: {} mode\n", compilation_mode);
     //--------------------------------------------//
     // Fetch cpu freq                             //
     // -------------------------------------------//
+
     const cpu_freq = b.option(
         u32,
         "cpu-freq",
         "CPU frequency in Hz",
     ) orelse 16_000_000;
-    const options = b.addOptions();
+
     options.addOption(u32, "cpu_freq", cpu_freq);
     std.log.info("Compiled with: {} Hz\n", .{cpu_freq});
 
@@ -32,6 +40,7 @@ pub fn build(b: *std.Build) void {
     // -------------------------------------------//
     // Define optimization                        //
     // -------------------------------------------//
+    //
     const optimize = b.standardOptimizeOption(.{ .preferred_optimize_mode = .Debug });
 
     // -------------------------------------------//
@@ -49,7 +58,7 @@ pub fn build(b: *std.Build) void {
     // Define executable                          //
     // -------------------------------------------//
     const exe = b.addExecutable(.{
-        .name = "stm32f401re.elf",
+        .name = "main.elf",
         .root_module = module,
         .linkage = .static,
     });

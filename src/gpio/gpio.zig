@@ -2,7 +2,7 @@ const pins = @import("pins.zig");
 
 const RCC_BASE: usize = 0x40023800;
 const RCC_AHB1ENR: *volatile u32 = @ptrFromInt(RCC_BASE + 0x30);
-
+const REGISTER_OFFSET: usize = 0x10;
 const GPIO = struct {
     base: usize,
     moder: *volatile u32,
@@ -68,10 +68,7 @@ const GPIO = struct {
 
 fn getShift(pin: pins.PINS) u5 {
     const value = @intFromEnum(pin);
-    const upper_limit = @intFromEnum(pins.PINS.PA15);
-    if (value > upper_limit)
-        return value - 16;
-    return value;
+    return value - REGISTER_OFFSET * (value >> 1);
 }
 
 pub const GPIOA: GPIO = GPIO.init(
