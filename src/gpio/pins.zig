@@ -14,8 +14,8 @@ pub const PINS = enum(u5) {
     PA12,
     PA13,
     PA14,
-    PA15, // 15
-    PB0, // 16
+    PA15,
+    PB0,
     PB1,
     PB2,
     PB3,
