@@ -1,5 +1,4 @@
-const timer = @import("timer/timer.zig");
-
+const TIMER = @import("timer/timer.zig");
 const PIN_MODE = @import("gpio/pins.zig").PIN_MODE;
 const PUPDR_MODE = @import("gpio/pins.zig").PUPDR_MODE;
 const GPIOA = @import("gpio/gpio.zig").GPIOA;
@@ -8,8 +7,8 @@ const PB4 = @import("gpio/pins.zig").PINS.PB4;
 const PA5 = @import("gpio/pins.zig").PINS.PA5;
 
 export fn _start() noreturn {
-    timer.systick_init();
-    timer.setupTimer2();
+    TIMER.systick_init();
+    TIMER.setupTimer2();
     GPIOA.initClock();
     GPIOB.initClock();
     GPIOA.setMode(PA5, PIN_MODE.OUTPUT);
@@ -18,7 +17,7 @@ export fn _start() noreturn {
     while (true) {
         if (GPIOB.digitalRead(PB4)) {
             GPIOA.toggle(PA5);
-            timer.delayMicros(1_000_000);
+            TIMER.delayMicros(1_000_000);
         }
     }
 }
